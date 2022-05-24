@@ -1,0 +1,22 @@
+#entra {
+    -fx-background-color: rgb(63, 247, 185);
+    -fx-border-style: solid;
+     -fx-border-radius: 1px;
+    -fx-border-color: rgb(36, 150, 112);
+    -fx-border-width: 4px;
+}
+#sale {
+    -fx-background-color: rgb(248, 76, 76);
+    -fx-border-style: solid;
+    -fx-border-radius: 1px;
+    -fx-border-color: rgb(150, 46, 46);
+    -fx-border-width: 4px;
+
+}
+
+#entra:hover{
+    -fx-background-color: rgb(175, 238, 217);
+}
+#sale:hover{
+    -fx-background-color: rgb(247, 144, 144);
+}

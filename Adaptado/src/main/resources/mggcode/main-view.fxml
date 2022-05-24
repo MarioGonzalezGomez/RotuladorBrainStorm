@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mggcode.Controller">
+   <center>
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <HBox alignment="CENTER" layoutY="26.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="-40.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="%lbl.presentador" translateY="18.0" />
+                                    <TextField fx:id="fieldPresentador" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <font>
+                                          <Font name="Arial" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" top="18.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label text="%lbl.cargo" />
+                                    <TextField fx:id="fieldCargo" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <font>
+                                          <Font name="Arial" size="18.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                              <ImageView fx:id="btnAdd" fitHeight="100.0" fitWidth="125.0" onMouseClicked="#addToList" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                                 <image>
+                                    <Image url="@../images/interfaz/mas.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <HBox.margin>
+                                    <Insets left="20.0" top="35.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <children>
+                              <TableView fx:id="tblPresentador" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="505.0" HBox.hgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colIdPresentador" prefWidth="50.0" text="ID" />
+                                  <TableColumn fx:id="col1Presentador" prefWidth="290.0" text="%col1presentador" />
+                                  <TableColumn fx:id="col2Presentador" prefWidth="290.0" text="%col2presentador" />
+                                </columns>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </TableView>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                 <children>
+                                    <ImageView fx:id="btnArriba" fitHeight="115.0" fitWidth="100.0" onMouseClicked="#subirElemento" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../images/interfaz/flechaArribaRecortada.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                    <ImageView fx:id="btnAbajo" fitHeight="115.0" fitWidth="100.0" onMouseClicked="#bajarElemento" pickOnBounds="true" preserveRatio="true" translateX="15.0" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../images/interfaz/flechaAbajoRecortada.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                    <ImageView fx:id="btnDelete" fitHeight="75.0" fitWidth="100.0" onMouseClicked="#eliminar" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../images/interfaz/boton-x.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="5.0" top="100.0" />
+                                       </VBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="50.0" left="50.0" top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="lblId" visible="false" />
+                        <Button id="entra" fx:id="btnEntra" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#entra" stylesheets="@estilos.css" text="%btn.entra" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="40.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="36.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button id="sale" fx:id="btnSale" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#sale" stylesheets="@estilos.css" text="%btn.sale" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets bottom="25.0" top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="36.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <HBox>
+                           <children>
+                              <Label text="%lbl.titulorotulo">
+                                 <HBox.margin>
+                                    <Insets right="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="lblRotulo" />
+                           </children>
+                        </HBox>
+                        <Label text="%lbl.selection">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextArea fx:id="txtAreaSelection" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="75.0" prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </TextArea>
+                        <TextField fx:id="fieldSelection1">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="fieldSelection2">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="Arial" size="18.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="btnModificar" alignment="CENTER" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#modificarSeleccion" text="%btn.modify" VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font name="Arial" size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <ChoiceBox fx:id="chboxEquipo" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="18.0" />
+                                       </VBox.margin>
+                                    </ChoiceBox>
+                                    <TextField fx:id="fieldCargoPersonaje" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <font>
+                                          <Font name="Arial" size="18.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <TextField fx:id="fieldPersonaje" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <font>
+                                          <Font name="Arial" size="18.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                              <ImageView fx:id="btnAdd2" fitHeight="75.0" fitWidth="125.0" onMouseClicked="#addToList2" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                                 <image>
+                                    <Image url="@../images/interfaz/mas.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="20.0" top="25.0" />
+                                 </HBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <children>
+                              <TableView fx:id="tblPersonaje" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colIdPersonaje" prefWidth="50.0" text="ID" />
+                                  <TableColumn fx:id="col1Personaje" prefWidth="115.0" text="%col1personaje" />
+                                  <TableColumn fx:id="col2Personaje" prefWidth="115.0" text="%col2personaje" />
+                                    <TableColumn fx:id="col3Personaje" prefWidth="115.0" text="%col3personaje" />
+                                </columns>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </HBox.margin>
+                              </TableView>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                 <children>
+                                    <ImageView fx:id="btnArriba2" fitHeight="75.0" fitWidth="100.0" onMouseClicked="#subirElemento2" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../images/interfaz/flechaArribaRecortada.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <VBox.margin>
+                                          <Insets left="7.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <ImageView fx:id="btnAbajo2" fitHeight="75.0" fitWidth="100.0" onMouseClicked="#bajarElemento2" pickOnBounds="true" preserveRatio="true" translateX="15.0" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../images/interfaz/flechaAbajoRecortada.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                    <ImageView fx:id="btnDelete2" fitHeight="60.0" fitWidth="100.0" onMouseClicked="#eliminar2" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../images/interfaz/boton-x.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="5.0" top="185.0" />
+                                       </VBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="50.0" right="30.0" top="30.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                     <children>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="%lbl.tituloDirecto" translateY="15.0">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Label>
+                                    <TextField fx:id="fieldTituloLocalizacion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" top="18.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Label text="%lbl.cuerpoDirecto" />
+                                    <TextField fx:id="fieldLocalizacion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <ImageView fx:id="btnAdd5" fitHeight="50.0" fitWidth="75.0" onMouseClicked="#addToList5" pickOnBounds="true" preserveRatio="true" translateY="50.0">
+                                 <image>
+                                    <Image url="@../images/interfaz/mas.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                           <children>
+                              <TableView fx:id="tblLocalizacion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                <columns>
+                                    <TableColumn fx:id="col1Localizacion" prefWidth="115.0" text="%col1Localizacion" />
+                                  <TableColumn fx:id="col2Localizacion" prefWidth="115.0" text="%col2Localizacion" />
+                                </columns>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </TableView>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                                 <children>
+                                    <ImageView fx:id="btnArriba5" fitHeight="60.0" fitWidth="100.0" onMouseClicked="#subirElemento5" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../images/interfaz/flechaArribaRecortada.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="7.0" top="10.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <ImageView fx:id="btnAbajo5" fitHeight="60.0" fitWidth="100.0" onMouseClicked="#bajarElemento5" pickOnBounds="true" preserveRatio="true" translateX="15.0" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../images/interfaz/flechaAbajoRecortada.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                    <ImageView fx:id="btnDelete5" fitHeight="50.0" fitWidth="100.0" onMouseClicked="#eliminar5" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                       <image>
+                                          <Image url="@../images/interfaz/boton-x.png" />
+                                       </image>
+                                       <VBox.margin>
+                                          <Insets left="5.0" top="215.0" />
+                                       </VBox.margin>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="35.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="55.0" right="15.0" top="30.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="borrarCrawl" mnemonicParsing="false" onAction="#borrarCrawlAction" text="%menu.borrarCrawl" />
+                  <MenuItem fx:id="borrarFaldon" mnemonicParsing="false" onAction="#borrarFaldonAction" text="%menu.borrarFaldon" />
+              <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#menuCloseAction" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="600.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="%lbl.crawl" />
+                              <TextField fx:id="fieldDeclaracion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="18.0" />
+                                 </font>
+                              </TextField>
+                              <TableView fx:id="tblDeclaracion" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colIdDeclaracion" prefWidth="50.0" text="ID" />
+                                  <TableColumn fx:id="col1Declaraciones" minWidth="0.0" prefWidth="725.0" text="%col1declaracion" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <children>
+                              <ImageView fx:id="btnAdd3" fitHeight="50.0" fitWidth="75.0" onMouseClicked="#addToList3" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/interfaz/mas.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="9.0" top="15.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <ImageView fx:id="btnArriba3" fitHeight="60.0" fitWidth="100.0" onMouseClicked="#subirElemento3" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                 <image>
+                                    <Image url="@../images/interfaz/flechaArriba.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="3.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="btnAbajo3" fitHeight="60.0" fitWidth="100.0" onMouseClicked="#bajarElemento3" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                 <image>
+                                    <Image url="@../images/interfaz/flechaAbajo.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="7.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="btnDelete3" fitHeight="50.0" fitWidth="75.0" onMouseClicked="#eliminar3" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                 <image>
+                                    <Image url="@../images/interfaz/boton-x.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="9.0" top="30.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="15.0" top="30.0" />
+                     </HBox.margin>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="600.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label text="%lbl.titular" />
+                              <TextField fx:id="fieldTitular" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                 <VBox.margin>
+                                    <Insets bottom="3.0" />
+                                 </VBox.margin>
+                                 <font>
+                                    <Font name="Arial" size="18.0" />
+                                 </font>
+                              </TextField>
+                              <Label text="%lbl.faldon" />
+                              <TextField fx:id="fieldFaldon">
+                                 <font>
+                                    <Font name="Arial" size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <TableView fx:id="tblFaldon" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colIdFaldon" prefWidth="50.0" text="ID" />
+                                    <TableColumn fx:id="col1Faldon" prefWidth="375.0" text="%col1faldon" />
+                                  <TableColumn fx:id="col2Faldon" prefWidth="375.0" text="%col2faldon" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <children>
+                              <ImageView fx:id="btnAdd4" fitHeight="50.0" fitWidth="75.0" onMouseClicked="#addToList4" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/interfaz/mas.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="9.0" top="40.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <ImageView fx:id="btnArriba4" fitHeight="60.0" fitWidth="100.0" onMouseClicked="#subirElemento4" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                 <image>
+                                    <Image url="@../images/interfaz/flechaArriba.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="3.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="btnAbajo4" fitHeight="60.0" fitWidth="100.0" onMouseClicked="#bajarElemento4" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                 <image>
+                                    <Image url="@../images/interfaz/flechaAbajo.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="7.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                              <ImageView fx:id="btnDelete4" fitHeight="50.0" fitWidth="75.0" onMouseClicked="#eliminar4" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+                                 <image>
+                                    <Image url="@../images/interfaz/boton-x.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets left="9.0" top="30.0" />
+                                 </VBox.margin>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </ImageView>
+                           </children>
+                        </VBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="30.0" left="50.0" right="20.0" />
+         </BorderPane.margin>
+      </AnchorPane>
+   </bottom>
+</BorderPane>
