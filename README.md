@@ -1,45 +1,36 @@
 # RotuladorBrainStorm
 
--Aplicación a PANTALLA COMPLETA.	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+PETICIONES DEL CLIENTE
 
--En vez listas hacia abajo, Serán solo dos con opción de ver todo, 
-una para presentadores otra para jugadores. (3 botones)  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- Aplicación a PANTALLA COMPLETA.
 
--Al añadir rótulo, que sea en la línea siguiente a la pichada.  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- En vez listas hacia abajo, Serán solo dos con opción de ver todo, una para presentadores otra para jugadores. (3 botones)  
 
--Eliminar una selección.  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- Al añadir rótulo, que sea en la línea siguiente a la pichada.
 
--Metemos banderas nuevas. XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- Poder eliminar una selección.
 
--La caja de texto cambia de color en función del núm. de caracteres.XXXXX FALTA AJUSTAR NÚMERO DE CARACTERES XXXXXXX
+- Metemos banderas nuevas.
 
--Añadir un label o similar donde indiquemos el tipo de rótulo actual XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- La caja de texto cambia de color en función del núm. de caracteres.
 
-Deshabilitar los cuadros de modificar para que no se pueda cambiar de tipo de gráfico. XXXXXXXXXXXXXXXXXXXXXXXXXXX
+- Añadir un label o similar donde indiquemos el tipo de rótulo actual
 
--Modificar rótulos existentes. XXXXXXX No permito cambiar el tipo de rótulo para evitar confusiones. Mejor borrar y añadir XXXXXXX
+- Deshabilitar los cuadros de modificar para que no se pueda cambiar de tipo de gráfico.
 
-Añadir una columna id a cada tabla que se corresponda con el órden de la lista, no ligado al elemento XXXXXXXXXXXXXXXXXXX
+- Modificar rótulos existentes.
 
-En menú, añadir opción de borrar todo. Borrar una tabla entera en específico (Todas estas con un pop de confirmación) XXXXXXXXXXXXX
+- Añadir una columna id a cada tabla que se corresponda con el órden de la lista, no ligado al elemento 
 
-Añadir el apartado de DIRECTO (Nueva tabla con dos fields) Obligatorio el de abajo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- En menú, añadir opción de borrar todo. Borrar una tabla entera en específico (Todas estas con un pop de confirmación)
 
-Al meter uno entre medias, no se le asigna el id adecuado XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- Añadir el apartado de DIRECTO (Nueva tabla con dos fields) Obligatorio el de abajo 
 
-Al salir un elemento, tendremos que sacar el de la tabla que tengamos seleccionada en ese momento. De modo que podamos
-salir en orden de los eventos que hayamos lanzado. XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+- Al salir un elemento, tendremos que sacar el de la tabla que tengamos seleccionada en ese momento. De modo que podamos salir en orden de los eventos que hayamos lanzado.
 
-Hacer el envio de señales de los logos  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-
+- Hacer el envio de señales de los logos
 
 -Arranque automático de IPF, mandando un parámetro que indica el proyecto a abrir. Y cerrar si hay otro ipf abierto 
-
-
-Evitar que se queden seleccionados los elementos
-
-Ordenar columna por defecto por ID (position)
 
 
 (Opcional) Sería interesante añadir una opción para añadir nuevos equipos
