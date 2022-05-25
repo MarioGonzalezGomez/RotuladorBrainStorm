@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import mggcode.conexion.ConexionIPF;
 import mggcode.conexion.ControladorBD;
 import mggcode.conexion.HibernateController;
+import mggcode.config.Configuracion;
 import mggcode.controller.*;
 import mggcode.entity.*;
 import mggcode.utiles.comparators.CompararDeclaracionPorId;
@@ -272,18 +273,20 @@ public class Controller implements Initializable {
     }
 
     private List<Equipo> cargarEquipos() {
-        // Equipo f = new Equipo();
-        // f.setNombre("-");
-        // equipoController.postEquipo(f);
-        // Equipo rm = new Equipo();
-        // rm.setNombre("Real Madrid");
-        // rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
-        // equipoController.postEquipo(rm);
-//
-        // Equipo lp = new Equipo();
-        // lp.setNombre("Liverpool");
-        // lp.setLogo("C:\\Proyectos\\Champions\\Proyecto\\Rotulos\\src\\main\\resources\\images\\logos_champions\\Liverpool.png");
-        // equipoController.postEquipo(lp);
+        String ruta = Configuracion.config.getProperty("rutaLogos");
+        Equipo f = new Equipo();
+        f.setNombre("-");
+        equipoController.postEquipo(f);
+        Equipo rm = new Equipo();
+        rm.setNombre("Real Madrid");
+        rm.setLogo(ruta + "RealMadrid.png");
+        System.out.println(rm.getLogo());
+        equipoController.postEquipo(rm);
+
+        Equipo lp = new Equipo();
+        lp.setNombre("Liverpool");
+        lp.setLogo(ruta + "Liverpool.png");
+        equipoController.postEquipo(lp);
         var x = equipoController.getAllEquipos();
         if (x == null) {
             return new ArrayList<>();
@@ -1071,7 +1074,7 @@ public class Controller implements Initializable {
                 if (personajeActual.getEquipo() != null && !personajeActual.getEquipo().getNombre().equals("-")) {
                     c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', '" + personajeActual.getEquipo().getLogo() + "');");
                 } else {
-                    c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', 'src/main/resources/images/logos_champions/Nada.png');");
+                    c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', '" + Configuracion.config.getProperty("rutaLogos") + "Nada.png" + "');");
                 }
 
                 c.enviarMensaje("itemset('<Champions>PRESENTADOR/ENTRA', 'EVENT_RUN');");
@@ -1081,7 +1084,7 @@ public class Controller implements Initializable {
                 if (personajeActual.getEquipo() != null && !personajeActual.getEquipo().getNombre().equals("-")) {
                     c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', '" + personajeActual.getEquipo().getLogo() + "');");
                 } else {
-                    c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', 'src/main/resources/images/logos_champions/Nada.png');");
+                    c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', '" + Configuracion.config.getProperty("rutaLogos") + "Nada.png" + "');");
                 }
                 c.enviarMensaje("itemset('<Champions>PRESENTADORCARGO/ENTRA', 'EVENT_RUN');");
             }
@@ -1131,7 +1134,7 @@ public class Controller implements Initializable {
                         if (personajeActual.getEquipo() != null && !personajeActual.getEquipo().getNombre().equals("-")) {
                             c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', '" + personajeActual.getEquipo().getLogo() + "');");
                         } else {
-                            c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', 'src/main/resources/images/logos_champions/Nada.png');");
+                            c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', '" + Configuracion.config.getProperty("rutaLogos") + "Nada.png" + "');");
                         }
                         c.enviarMensaje("itemset('<Champions>PRESENTADOR/ENTRA', 'EVENT_RUN');");
                     } else {
@@ -1140,7 +1143,7 @@ public class Controller implements Initializable {
                         if (personajeActual.getEquipo() != null && !personajeActual.getEquipo().getNombre().equals("-")) {
                             c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', '" + personajeActual.getEquipo().getLogo() + "');");
                         } else {
-                            c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', 'src/main/resources/images/logos_champions/Nada.png');");
+                            c.enviarMensaje("itemset('<Champions>textESCUDO', 'TEX_FILE', '" + Configuracion.config.getProperty("rutaLogos") + "Nada.png" + "');");
                         }
                         c.enviarMensaje("itemset('<Champions>PRESENTADORCARGO/ENTRA', 'EVENT_RUN');");
                     }
@@ -1369,7 +1372,7 @@ public class Controller implements Initializable {
     }
 
     private void guardarYsalir() {
-        // vaciarBD();
+        vaciarBD();
         guardar();
 
         System.out.println("CERRANDO APLICACIÓN");
