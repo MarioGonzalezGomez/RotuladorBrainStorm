@@ -10,5 +10,5 @@ module RotulosDeportes {
     opens mggcode to javafx.fxml;
     opens mggcode.entity to javafx.base;
     exports mggcode;
-    exports  mggcode.entity;
+    exports mggcode.entity;
 }

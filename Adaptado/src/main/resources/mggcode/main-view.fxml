@@ -28,9 +28,9 @@
                <children>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <children>
-                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                              <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                  <children>
                                     <Label text="%lbl.presentador" translateY="18.0" />
                                     <TextField fx:id="fieldPresentador" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
@@ -103,7 +103,7 @@
                                           <Image url="@../images/interfaz/boton-x.png" />
                                        </image>
                                        <VBox.margin>
-                                          <Insets left="5.0" top="100.0" />
+                                          <Insets left="5.0" top="250.0" />
                                        </VBox.margin>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
@@ -126,7 +126,6 @@
                   </VBox>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="lblId" visible="false" />
                         <Button id="entra" fx:id="btnEntra" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#entra" stylesheets="@estilos.css" text="%btn.entra" VBox.vgrow="ALWAYS">
                            <VBox.margin>
                               <Insets bottom="40.0" />
@@ -200,16 +199,18 @@
                   </VBox>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="400.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <children>
-                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                              <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                  <children>
+                                    <Label text="%lbl.equipo" translateY="17.0" />
                                     <ChoiceBox fx:id="chboxEquipo" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                        <VBox.margin>
                                           <Insets bottom="10.0" top="18.0" />
                                        </VBox.margin>
                                     </ChoiceBox>
-                                    <TextField fx:id="fieldCargoPersonaje" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                    <Label text="%lbl.presentador" />
+                                    <TextField fx:id="fieldPersonaje" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                        <font>
                                           <Font name="Arial" size="18.0" />
                                        </font>
@@ -217,7 +218,8 @@
                                           <Insets bottom="10.0" />
                                        </VBox.margin>
                                     </TextField>
-                                    <TextField fx:id="fieldPersonaje" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                    <Label text="%lbl.cargo" />
+                                    <TextField fx:id="fieldCargoPersonaje" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                                        <font>
                                           <Font name="Arial" size="18.0" />
                                        </font>
@@ -243,8 +245,8 @@
                                 <columns>
                                     <TableColumn fx:id="colIdPersonaje" prefWidth="50.0" text="ID" />
                                   <TableColumn fx:id="col1Personaje" prefWidth="115.0" text="%col1personaje" />
-                                  <TableColumn fx:id="col2Personaje" prefWidth="115.0" text="%col2personaje" />
                                     <TableColumn fx:id="col3Personaje" prefWidth="115.0" text="%col3personaje" />
+                                  <TableColumn fx:id="col2Personaje" prefWidth="115.0" text="%col2personaje" />
                                 </columns>
                                  <HBox.margin>
                                     <Insets bottom="5.0" />
@@ -279,7 +281,7 @@
                                           <Image url="@../images/interfaz/boton-x.png" />
                                        </image>
                                        <VBox.margin>
-                                          <Insets left="5.0" top="185.0" />
+                                          <Insets left="5.0" top="315.0" />
                                        </VBox.margin>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />
@@ -299,7 +301,7 @@
                   </VBox>
                   <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                      <children>
-                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                        <HBox maxWidth="1.7976931348623157E308">
                            <children>
                               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                                  <children>
@@ -370,7 +372,7 @@
                                           <Image url="@../images/interfaz/boton-x.png" />
                                        </image>
                                        <VBox.margin>
-                                          <Insets left="5.0" top="215.0" />
+                                          <Insets left="5.0" top="405.0" />
                                        </VBox.margin>
                                        <cursor>
                                           <Cursor fx:constant="HAND" />

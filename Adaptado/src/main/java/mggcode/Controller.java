@@ -4,6 +4,7 @@ package mggcode;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,10 @@ import mggcode.conexion.ControladorBD;
 import mggcode.conexion.HibernateController;
 import mggcode.controller.*;
 import mggcode.entity.*;
+import mggcode.utiles.comparators.CompararDeclaracionPorId;
+import mggcode.utiles.comparators.CompararFaldonPorId;
+import mggcode.utiles.comparators.CompararPersonajePorId;
+import mggcode.utiles.comparators.CompararPresentadorPorId;
 
 
 import java.net.URL;
@@ -61,9 +66,6 @@ public class Controller implements Initializable {
     private DeclaracionController declaracionController;
     private FaldonController faldonController;
     private EquipoController equipoController;
-
-    @FXML
-    private Label lblId;
 
     @FXML
     private Label lblRotulo;
@@ -172,13 +174,13 @@ public class Controller implements Initializable {
         c = ConexionIPF.getConexion();
         configuracionInicial();
         iniciarDatos();
+        addEscuchadoresListas();
     }
 
     private void configuracionInicial() {
         configurarTablas();
         configurarFields();
-        addEscuchadores();
-
+        addEsuchadoresElementos();
     }
 
     private void iniciarDatos() {
@@ -191,6 +193,7 @@ public class Controller implements Initializable {
         datosPresentador = FXCollections.observableArrayList(
                 cargarPresentadores()
         );
+
 
         datosPersonaje = FXCollections.observableArrayList(
                 cargarPersonajes()
@@ -207,6 +210,11 @@ public class Controller implements Initializable {
         datosEquipo = FXCollections.observableArrayList(
                 cargarEquipos()
         );
+
+        datosPresentador.sort(new CompararPresentadorPorId());
+        datosPersonaje.sort(new CompararPersonajePorId());
+        datosDeclaraciones.sort(new CompararDeclaracionPorId());
+        datosFaldon.sort(new CompararFaldonPorId());
 
         Localizacion l1 = new Localizacion();
         l1.setTexto("Directo");
@@ -227,58 +235,97 @@ public class Controller implements Initializable {
     }
 
     private List<Presentador> cargarPresentadores() {
-        return presentadorController.getAllPresentadores();
+
+        var x = presentadorController.getAllPresentadores();
+        if (x == null) {
+            return new ArrayList<>();
+        } else {
+            return x;
+        }
     }
 
     private List<Personaje> cargarPersonajes() {
-        return personajeController.getAllPersonajes();
+        var x = personajeController.getAllPersonajes();
+        if (x == null) {
+            return new ArrayList<>();
+        } else {
+            return x;
+        }
     }
 
     private List<Declaracion> cargarDeclaraciones() {
-        return declaracionController.getAllDeclaraciones();
+        var x = declaracionController.getAllDeclaraciones();
+        if (x == null) {
+            return new ArrayList<>();
+        } else {
+            return x;
+        }
     }
 
     private List<Faldon> cargarFaldones() {
-        return faldonController.getAllFaldones();
+        var x = faldonController.getAllFaldones();
+        if (x == null) {
+            return new ArrayList<>();
+        } else {
+            return x;
+        }
     }
 
     private List<Equipo> cargarEquipos() {
- Equipo f = new Equipo();
- f.setNombre("-");
- equipoController.postEquipo(f);
-Equipo rm = new Equipo();
-rm.setNombre("Real Madrid");
-rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
- equipoController.postEquipo(rm);
-
- Equipo lp = new Equipo();
- lp.setNombre("Liverpool");
- lp.setLogo("C:\\Proyectos\\Champions\\Proyecto\\Rotulos\\src\\main\\resources\\images\\logos_champions\\Liverpool.png");
- equipoController.postEquipo(lp);
-        return equipoController.getAllEquipos();
+        // Equipo f = new Equipo();
+        // f.setNombre("-");
+        // equipoController.postEquipo(f);
+        // Equipo rm = new Equipo();
+        // rm.setNombre("Real Madrid");
+        // rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
+        // equipoController.postEquipo(rm);
+//
+        // Equipo lp = new Equipo();
+        // lp.setNombre("Liverpool");
+        // lp.setLogo("C:\\Proyectos\\Champions\\Proyecto\\Rotulos\\src\\main\\resources\\images\\logos_champions\\Liverpool.png");
+        // equipoController.postEquipo(lp);
+        var x = equipoController.getAllEquipos();
+        if (x == null) {
+            return new ArrayList<>();
+        } else {
+            return x;
+        }
     }
 
 
-    private void addEscuchadores() {
+    private void addEsuchadoresElementos() {
         tblPresentador.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observableValue, Object o, Object t1) {
-                presentadorActual = (Presentador) t1;
+                if (t1 != null) {
+                    presentadorActual = (Presentador) t1;
+                }
                 tipoActual = "presentador";
                 if (presentadorActual != null && txtAreaSelection != null && fieldSelection1 != null) {
                     limpiarSeleccion();
                     modificarFields();
                     txtAreaSelection.setText(presentadorActual.getNombre());
                     fieldSelection1.setText(presentadorActual.getCargo());
-                    lblId.setText(String.valueOf(presentadorActual.getPosition()));
                 }
+            }
+        });
+
+        tblPresentador.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    tblPresentador.getSelectionModel().clearSelection();
+                }
+
             }
         });
 
         tblPersonaje.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observableValue, Object o, Object t1) {
-                personajeActual = (Personaje) t1;
+                if (t1 != null) {
+                    personajeActual = (Personaje) t1;
+                }
                 tipoActual = "personaje";
                 if (personajeActual != null && txtAreaSelection != null && fieldSelection1 != null) {
                     limpiarSeleccion();
@@ -288,42 +335,77 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
                     if (personajeActual.getEquipo() != null) {
                         fieldSelection2.setText(personajeActual.getEquipo().getNombre());
                     }
-                    lblId.setText(String.valueOf(personajeActual.getPosition()));
                 }
+            }
+        });
+
+        tblPersonaje.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    tblPersonaje.getSelectionModel().clearSelection();
+                }
+
             }
         });
 
         tblDeclaracion.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observableValue, Object o, Object t1) {
-                declaracionActual = (Declaracion) t1;
+                if (t1 != null) {
+                    declaracionActual = (Declaracion) t1;
+                }
                 tipoActual = "declaracion";
                 if (declaracionActual != null && txtAreaSelection != null && fieldSelection1 != null) {
                     limpiarSeleccion();
                     modificarFields();
                     txtAreaSelection.setText(declaracionActual.getTexto());
-                    lblId.setText(String.valueOf(declaracionActual.getPosition()));
                 }
             }
         });
+
+        tblDeclaracion.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    tblDeclaracion.getSelectionModel().clearSelection();
+                }
+            }
+        });
+
+
         tblFaldon.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observableValue, Object o, Object t1) {
-                faldonActual = (Faldon) t1;
+                if (t1 != null) {
+                    faldonActual = (Faldon) t1;
+                }
                 tipoActual = "faldon";
                 if (faldonActual != null && txtAreaSelection != null && fieldSelection1 != null) {
                     limpiarSeleccion();
                     modificarFields();
                     txtAreaSelection.setText(faldonActual.getTexto());
                     fieldSelection1.setText(faldonActual.getTitular());
-                    lblId.setText(String.valueOf(faldonActual.getPosition()));
                 }
             }
         });
+
+        tblFaldon.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    tblFaldon.getSelectionModel().clearSelection();
+                }
+
+            }
+        });
+
         tblLocalizacion.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observableValue, Object o, Object t1) {
-                localizacionActual = (Localizacion) t1;
+                if (t1 != null) {
+                    localizacionActual = (Localizacion) t1;
+                }
                 tipoActual = "localizacion";
                 if (localizacionActual != null && txtAreaSelection != null && fieldSelection1 != null) {
                     limpiarSeleccion();
@@ -333,6 +415,16 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
                 }
             }
         });
+
+        tblLocalizacion.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (!t1) {
+                    tblLocalizacion.getSelectionModel().clearSelection();
+                }
+            }
+        });
+
         fieldPresentador.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -427,6 +519,46 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
                 } else {
                     fieldLocalizacion.setStyle("-fx-text-box-border: #3B83BD; -fx-focus-color: #3B83BD;");
                 }
+            }
+        });
+
+    }
+
+    private void addEscuchadoresListas() {
+        datosPresentador.addListener(new ListChangeListener<>() {
+            @Override
+            public void onChanged(Change<? extends Presentador> change) {
+                datosPresentador.forEach(presentador -> {
+                    presentador.setPosition(datosPresentador.indexOf(presentador) + 1);
+                });
+            }
+        });
+
+
+        datosPersonaje.addListener(new ListChangeListener<>() {
+            @Override
+            public void onChanged(Change<? extends Personaje> change) {
+                datosPersonaje.forEach(per -> {
+                    per.setPosition(datosPersonaje.indexOf(per) + 1);
+                });
+            }
+        });
+
+        datosDeclaraciones.addListener(new ListChangeListener<>() {
+            @Override
+            public void onChanged(Change<? extends Declaracion> change) {
+                datosDeclaraciones.forEach(dec -> {
+                    dec.setPosition(datosDeclaraciones.indexOf(dec) + 1);
+                });
+            }
+        });
+
+        datosFaldon.addListener(new ListChangeListener<>() {
+            @Override
+            public void onChanged(Change<? extends Faldon> change) {
+                datosFaldon.forEach(fal -> {
+                    fal.setPosition(datosFaldon.indexOf(fal) + 1);
+                });
             }
         });
 
@@ -530,6 +662,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
 
         col1Localizacion.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         col2Localizacion.setCellValueFactory(new PropertyValueFactory<>("texto"));
+
     }
 
     private void configurarFields() {
@@ -589,11 +722,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (!fieldPresentador.getText().equals("")) {
             Presentador presentador = new Presentador();
             presentador.setNombre(fieldPresentador.getText());
-            if (datosPresentador.size() == 0) {
-                presentador.setPosition(1);
-            } else {
-                presentador.setPosition(datosPresentador.size() + 1);
-            }
             if (fieldCargo.getText().equals("")) {
                 presentador.setTipo(Tipo.SIMPLE);
             } else {
@@ -614,9 +742,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
                 });
                 datosPresentador.set(posicion + 1, presentador);
                 datosPresentador.removeAll(siguientes);
-                siguientes.forEach(x -> {
-                    x.setPosition(x.getPosition() + 1);
-                });
                 datosPresentador.addAll(siguientes);
             } else {
                 datosPresentador.add(presentador);
@@ -635,11 +760,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (!fieldPersonaje.getText().equals("")) {
             Personaje personaje = new Personaje();
             personaje.setNombre(fieldPersonaje.getText());
-            if (datosPersonaje.size() == 0) {
-                personaje.setPosition(1);
-            } else {
-                personaje.setPosition(datosPersonaje.size() + 1);
-            }
+
             if (fieldCargoPersonaje.getText().equals("")) {
                 personaje.setTipo(Tipo.SIMPLE);
             } else {
@@ -662,9 +783,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
                 });
                 datosPersonaje.set(posicion + 1, personaje);
                 datosPersonaje.removeAll(siguientes);
-                siguientes.forEach(x -> {
-                    x.setPosition(x.getPosition() + 1);
-                });
                 datosPersonaje.addAll(siguientes);
             } else {
                 datosPersonaje.add(personaje);
@@ -683,11 +801,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (!fieldDeclaracion.getText().equals("")) {
             Declaracion declaracion = new Declaracion();
             declaracion.setTexto(fieldDeclaracion.getText());
-            if (datosDeclaraciones.size() == 0) {
-                declaracion.setPosition(1);
-            } else {
-                declaracion.setPosition(datosDeclaraciones.size() + 1);
-            }
             List<Declaracion> seleccion = getRotulosSeleccionadosDeclaracion();
             if (seleccion.size() == 1 && datosDeclaraciones.indexOf(seleccion.get(0)) != datosDeclaraciones.size() - 1 && declaracionActual == seleccion.get(0)) {
                 int posicion = datosDeclaraciones.indexOf(seleccion.get(0));
@@ -700,9 +813,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
                 });
                 datosDeclaraciones.set(posicion + 1, declaracion);
                 datosDeclaraciones.removeAll(siguientes);
-                siguientes.forEach(x -> {
-                    x.setPosition(x.getPosition() + 1);
-                });
                 datosDeclaraciones.addAll(siguientes);
             } else {
                 datosDeclaraciones.add(declaracion);
@@ -720,11 +830,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (!fieldFaldon.getText().equals("")) {
             Faldon faldon = new Faldon();
             faldon.setTexto(fieldFaldon.getText());
-            if (datosFaldon.size() == 0) {
-                faldon.setPosition(1);
-            } else {
-                faldon.setPosition(datosFaldon.size() + 1);
-            }
             if (fieldTitular.getText().equals("")) {
                 faldon.setTipo(Tipo.SIMPLE);
             } else {
@@ -743,9 +848,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
                 });
                 datosFaldon.set(posicion + 1, faldon);
                 datosFaldon.removeAll(siguientes);
-                siguientes.forEach(x -> {
-                    x.setPosition(x.getPosition() + 1);
-                });
                 datosFaldon.addAll(siguientes);
             } else {
                 datosFaldon.add(faldon);
@@ -799,10 +901,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (seleccion.size() == 1 && datosPresentador.indexOf(seleccion.get(0)) != 0) {
             int posicionSeleccion = datosPresentador.indexOf(seleccion.get(0));
             Presentador seleccionado = datosPresentador.get(posicionSeleccion);
-            seleccionado.setPosition(seleccionado.getPosition() - 1);
             Presentador actual = datosPresentador.get(posicionSeleccion - 1);
-            actual.setPosition(actual.getPosition() + 1);
-
             datosPresentador.set(posicionSeleccion - 1, seleccionado);
             datosPresentador.set(posicionSeleccion, actual);
         }
@@ -814,10 +913,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (seleccion.size() == 1 && datosPersonaje.indexOf(seleccion.get(0)) != 0) {
             int posicionSeleccion = datosPersonaje.indexOf(seleccion.get(0));
             Personaje seleccionado = datosPersonaje.get(posicionSeleccion);
-            seleccionado.setPosition(seleccionado.getPosition() - 1);
             Personaje actual = datosPersonaje.get(posicionSeleccion - 1);
-            actual.setPosition(actual.getPosition() + 1);
-
             datosPersonaje.set(posicionSeleccion - 1, seleccionado);
             datosPersonaje.set(posicionSeleccion, actual);
         }
@@ -829,10 +925,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (seleccion.size() == 1 && datosDeclaraciones.indexOf(seleccion.get(0)) != 0) {
             int posicionSeleccion = datosDeclaraciones.indexOf(seleccion.get(0));
             Declaracion seleccionado = datosDeclaraciones.get(posicionSeleccion);
-            seleccionado.setPosition(seleccionado.getPosition() - 1);
             Declaracion actual = datosDeclaraciones.get(posicionSeleccion - 1);
-            actual.setPosition(actual.getPosition() + 1);
-
             datosDeclaraciones.set(posicionSeleccion - 1, seleccionado);
             datosDeclaraciones.set(posicionSeleccion, actual);
         }
@@ -844,10 +937,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (seleccion.size() == 1 && datosFaldon.indexOf(seleccion.get(0)) != 0) {
             int posicionSeleccion = datosFaldon.indexOf(seleccion.get(0));
             Faldon seleccionado = datosFaldon.get(posicionSeleccion);
-            seleccionado.setPosition(seleccionado.getPosition() - 1);
             Faldon actual = datosFaldon.get(posicionSeleccion - 1);
-            actual.setPosition(actual.getPosition() + 1);
-
             datosFaldon.set(posicionSeleccion - 1, seleccionado);
             datosFaldon.set(posicionSeleccion, actual);
         }
@@ -873,10 +963,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (seleccion.size() == 1 && datosPresentador.indexOf(seleccion.get(0)) != datosPresentador.size() - 1) {
             int posicionSeleccion = datosPresentador.indexOf(seleccion.get(0));
             Presentador seleccionado = datosPresentador.get(posicionSeleccion);
-            seleccionado.setPosition(seleccionado.getPosition() + 1);
             Presentador actual = datosPresentador.get(posicionSeleccion + 1);
-            actual.setPosition(actual.getPosition() - 1);
-
             datosPresentador.set(posicionSeleccion + 1, seleccionado);
             datosPresentador.set(posicionSeleccion, actual);
         }
@@ -888,10 +975,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (seleccion.size() == 1 && datosPersonaje.indexOf(seleccion.get(0)) != datosPersonaje.size() - 1) {
             int posicionSeleccion = datosPersonaje.indexOf(seleccion.get(0));
             Personaje seleccionado = datosPersonaje.get(posicionSeleccion);
-            seleccionado.setPosition(seleccionado.getPosition() + 1);
             Personaje actual = datosPersonaje.get(posicionSeleccion + 1);
-            actual.setPosition(actual.getPosition() - 1);
-
             datosPersonaje.set(posicionSeleccion + 1, seleccionado);
             datosPersonaje.set(posicionSeleccion, actual);
         }
@@ -903,10 +987,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (seleccion.size() == 1 && datosDeclaraciones.indexOf(seleccion.get(0)) != datosDeclaraciones.size() - 1) {
             int posicionSeleccion = datosDeclaraciones.indexOf(seleccion.get(0));
             Declaracion seleccionado = datosDeclaraciones.get(posicionSeleccion);
-            seleccionado.setPosition(seleccionado.getPosition() + 1);
             Declaracion actual = datosDeclaraciones.get(posicionSeleccion + 1);
-            actual.setPosition(actual.getPosition() - 1);
-
             datosDeclaraciones.set(posicionSeleccion + 1, seleccionado);
             datosDeclaraciones.set(posicionSeleccion, actual);
         }
@@ -918,10 +999,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (seleccion.size() == 1 && datosFaldon.indexOf(seleccion.get(0)) != datosFaldon.size() - 1) {
             int posicionSeleccion = datosFaldon.indexOf(seleccion.get(0));
             Faldon seleccionado = datosFaldon.get(posicionSeleccion);
-            seleccionado.setPosition(seleccionado.getPosition() + 1);
             Faldon actual = datosFaldon.get(posicionSeleccion + 1);
-            actual.setPosition(actual.getPosition() - 1);
-
             datosFaldon.set(posicionSeleccion + 1, seleccionado);
             datosFaldon.set(posicionSeleccion, actual);
         }
@@ -933,9 +1011,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
         if (seleccion.size() == 1 && datosLocalizacion.indexOf(seleccion.get(0)) != datosLocalizacion.size() - 1) {
             int posicionSeleccion = datosLocalizacion.indexOf(seleccion.get(0));
             Localizacion seleccionado = datosLocalizacion.get(posicionSeleccion);
-
             Localizacion actual = datosLocalizacion.get(posicionSeleccion + 1);
-
             datosLocalizacion.set(posicionSeleccion + 1, seleccionado);
             datosLocalizacion.set(posicionSeleccion, actual);
         }
@@ -945,6 +1021,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
     void eliminar(MouseEvent event) {
         List<Presentador> seleccion = getRotulosSeleccionadosPresentador();
         datosPresentador.removeAll(seleccion);
+
     }
 
     @FXML
@@ -979,19 +1056,16 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
 
         if (txtAreaSelection.getText().equals(presentadorActual.getNombre())) {
             if (presentadorActual.getTipo() == Tipo.SIMPLE) {
-                //tipoLanzado = "presentadorSimple";
                 c.enviarMensaje("itemset('<Champions>txtPRESENTADOR', 'MAP_STRING_PAR', '" + presentadorActual.getNombre() + "');");
                 c.enviarMensaje("itemset('<Champions>txtCARGO', 'MAP_STRING_PAR', ' ');");
                 c.enviarMensaje("itemset('<Champions>PRESENTADOR/ENTRA', 'EVENT_RUN');");
             } else {
-                //tipoLanzado = "presentadorDoble";
                 c.enviarMensaje("itemset('<Champions>txtPRESENTADOR', 'MAP_STRING_PAR', '" + presentadorActual.getNombre() + "');");
                 c.enviarMensaje("itemset('<Champions>txtCARGO', 'MAP_STRING_PAR', '" + presentadorActual.getCargo() + "');");
                 c.enviarMensaje("itemset('<Champions>PRESENTADORCARGO/ENTRA', 'EVENT_RUN');");
             }
         } else if (txtAreaSelection.getText().equals(personajeActual.getNombre())) {
             if (personajeActual.getTipo() == Tipo.SIMPLE) {
-                //tipoLanzado = "personajeSimple";
                 c.enviarMensaje("itemset('<Champions>txtPRESENTADOR', 'MAP_STRING_PAR', '" + personajeActual.getNombre() + "');");
                 c.enviarMensaje("itemset('<Champions>txtCARGO', 'MAP_STRING_PAR', ' ');");
                 if (personajeActual.getEquipo() != null && !personajeActual.getEquipo().getNombre().equals("-")) {
@@ -1002,7 +1076,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
 
                 c.enviarMensaje("itemset('<Champions>PRESENTADOR/ENTRA', 'EVENT_RUN');");
             } else {
-                // tipoLanzado = "personajeDoble";
                 c.enviarMensaje("itemset('<Champions>txtPRESENTADOR', 'MAP_STRING_PAR', '" + personajeActual.getNombre() + "');");
                 c.enviarMensaje("itemset('<Champions>txtCARGO', 'MAP_STRING_PAR', '" + personajeActual.getCargo() + "');");
                 if (personajeActual.getEquipo() != null && !personajeActual.getEquipo().getNombre().equals("-")) {
@@ -1013,7 +1086,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
                 c.enviarMensaje("itemset('<Champions>PRESENTADORCARGO/ENTRA', 'EVENT_RUN');");
             }
         } else if (txtAreaSelection.getText().equals(declaracionActual.getTexto())) {
-            //tipoLanzado = "declaracion";
             c.enviarMensaje("itemset('<Champions>txtCRAWL', 'MAP_STRING_PAR', '" + declaracionActual.getTexto() + "');");
             c.enviarMensaje("itemset('<Champions>CRAWL/ENTRA', 'EVENT_RUN');");
         } else if (txtAreaSelection.getText().equals(faldonActual.getTexto())) {
@@ -1028,12 +1100,10 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
             }
         } else if (txtAreaSelection.getText().equals(localizacionActual.getTexto())) {
             if (localizacionActual.getTipo() == Tipo.SIMPLE) {
-                // tipoLanzado = "localizacionSimple";
                 c.enviarMensaje("itemset('<Champions>txtLOCALIZACION', 'MAP_STRING_PAR', '" + localizacionActual.getTexto() + "');");
                 c.enviarMensaje("itemset('<Champions>txtLOCALIZACION_TITULAR', 'MAP_STRING_PAR', ' ');");
                 c.enviarMensaje("itemset('<Champions>LOCALIZACION/ENTRA', 'EVENT_RUN');");
             } else {
-                // tipoLanzado = "localizacionDoble";
                 c.enviarMensaje("itemset('<Champions>txtLOCALIZACION', 'MAP_STRING_PAR', '" + localizacionActual.getTexto() + "');");
                 c.enviarMensaje("itemset('<Champions>txtLOCALIZACION_TITULAR', 'MAP_STRING_PAR', '" + localizacionActual.getTitulo() + "');");
                 c.enviarMensaje("itemset('<Champions>LOCALIZACION/ENTRA', 'EVENT_RUN');");
@@ -1115,28 +1185,28 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
     void sale(ActionEvent event) {
         switch (tipoActual) {
             case "presentador":
-                if (presentadorActual.getTipo() == Tipo.SIMPLE) {
-                    c.enviarMensaje("itemset('<Champions>PRESENTADOR/SALE', 'EVENT_RUN');");
-                } else {
-                    c.enviarMensaje("itemset('<Champions>PRESENTADORCARGO/SALE', 'EVENT_RUN');");
-                }
+                //   if (presentadorActual.getTipo() == Tipo.SIMPLE) {
+                c.enviarMensaje("itemset('<Champions>PRESENTADOR/SALE', 'EVENT_RUN');");
+                //  } else {
+                c.enviarMensaje("itemset('<Champions>PRESENTADORCARGO/SALE', 'EVENT_RUN');");
+                //   }
                 break;
             case "personaje":
-                if (personajeActual.getTipo() == Tipo.SIMPLE) {
-                    c.enviarMensaje("itemset('<Champions>PRESENTADOR/SALE', 'EVENT_RUN');");
-                } else {
-                    c.enviarMensaje("itemset('<Champions>PRESENTADORCARGO/SALE', 'EVENT_RUN');");
-                }
+                // if (personajeActual.getTipo() == Tipo.SIMPLE) {
+                c.enviarMensaje("itemset('<Champions>PRESENTADOR/SALE', 'EVENT_RUN');");
+                // } else {
+                c.enviarMensaje("itemset('<Champions>PRESENTADORCARGO/SALE', 'EVENT_RUN');");
+                // }
                 break;
             case "declaracion":
                 c.enviarMensaje("itemset('<Champions>CRAWL/SALE', 'EVENT_RUN');");
                 break;
             case "faldon":
-                if (faldonActual.getTipo() == Tipo.SIMPLE) {
-                    c.enviarMensaje("itemset('<Champions>FALDON1/SALE', 'EVENT_RUN');");
-                } else {
-                    c.enviarMensaje("itemset('<Champions>FALDON2/SALE', 'EVENT_RUN');");
-                }
+                // if (faldonActual.getTipo() == Tipo.SIMPLE) {
+                c.enviarMensaje("itemset('<Champions>FALDON1/SALE', 'EVENT_RUN');");
+                // } else {
+                c.enviarMensaje("itemset('<Champions>FALDON2/SALE', 'EVENT_RUN');");
+                // }
                 break;
 
             case "localizacion":
@@ -1156,7 +1226,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
             case "presentador":
                 Presentador presentador = new Presentador();
                 presentador.setNombre(txtAreaSelection.getText());
-                presentador.setPosition(Integer.parseInt(lblId.getText()));
                 if (fieldSelection1.getText() == null) {
                     presentador.setTipo(Tipo.SIMPLE);
                 } else {
@@ -1169,7 +1238,6 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
             case "personaje":
                 Personaje personaje = new Personaje();
                 personaje.setNombre(txtAreaSelection.getText());
-                personaje.setPosition(Integer.parseInt(lblId.getText()));
                 if (fieldSelection1.getText() == null) {
                     personaje.setTipo(Tipo.SIMPLE);
                 } else {
@@ -1183,14 +1251,12 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
             case "declaracion":
                 Declaracion declaracion = new Declaracion();
                 declaracion.setTexto(txtAreaSelection.getText());
-                declaracion.setPosition(Integer.parseInt(lblId.getText()));
                 position = datosDeclaraciones.indexOf(declaracionActual);
                 datosDeclaraciones.set(position, declaracion);
                 break;
             case "faldon":
                 Faldon faldon = new Faldon();
                 faldon.setTexto(txtAreaSelection.getText());
-                faldon.setPosition(Integer.parseInt(lblId.getText()));
                 if (fieldSelection1.getText() == null) {
                     faldon.setTipo(Tipo.SIMPLE);
                 } else {
@@ -1261,7 +1327,7 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
     /////////////////////////////////////////////////////////////////////////
     private void vaciarBD() {
         presentadorController.getAllPresentadores().forEach(presentador -> {
-            System.out.println(presentadorController.deletePresentador(presentador));
+            presentadorController.deletePresentador(presentador);
         });
         personajeController.getAllPersonajes().forEach(personaje -> {
             personajeController.deletePersonaje(personaje);
@@ -1279,27 +1345,32 @@ rm.setLogo("C:\\Users\\Administrador\\Desktop\\RealMadrid.png");
     }
 
     private void guardar() {
-        datosPresentador.forEach(presentador -> {
-            presentadorController.postPresentador(presentador);
-        });
-
-        datosPersonaje.forEach(personaje -> {
-            personajeController.postPersonaje(personaje);
-        });
-
-        datosDeclaraciones.forEach(dec -> {
-            declaracionController.postDeclaracion(dec);
-        });
-
-        datosFaldon.forEach(faldon -> {
-            faldonController.postFaldon(faldon);
-        });
+        if (datosPresentador.size() != 0) {
+            datosPresentador.forEach(presentador -> {
+                presentadorController.postPresentador(presentador);
+            });
+        }
+        if (datosPersonaje.size() != 0) {
+            datosPersonaje.forEach(personaje -> {
+                personajeController.postPersonaje(personaje);
+            });
+        }
+        if (datosDeclaraciones.size() != 0) {
+            datosDeclaraciones.forEach(dec -> {
+                declaracionController.postDeclaracion(dec);
+            });
+        }
+        if (datosFaldon.size() != 0) {
+            datosFaldon.forEach(faldon -> {
+                faldonController.postFaldon(faldon);
+            });
+        }
 
     }
 
     private void guardarYsalir() {
-        vaciarBD();
-        //guardar();
+        // vaciarBD();
+        guardar();
 
         System.out.println("CERRANDO APLICACIÓN");
         c.desconectar();
