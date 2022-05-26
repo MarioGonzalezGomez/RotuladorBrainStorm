@@ -1,11 +1,15 @@
 package mggcode.repository;
 
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import javafx.collections.ObservableList;
 import mggcode.conexion.HibernateController;
 import mggcode.entity.Presentador;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PresentadorRepository implements CrudRepository<Presentador, Integer> {
 
@@ -90,4 +94,15 @@ public class PresentadorRepository implements CrudRepository<Presentador, Intege
             hc.close();
         }
     }
+
+    public void deleteAll() throws SQLException{
+        HibernateController hc = HibernateController.getInstance();
+        hc.open();
+        hc.getTransaction().begin();
+        Query query = hc.getManager().createQuery("DELETE Presentador d");
+        query.executeUpdate();
+        hc.getTransaction().commit();
+        hc.close();
+    }
+
 }

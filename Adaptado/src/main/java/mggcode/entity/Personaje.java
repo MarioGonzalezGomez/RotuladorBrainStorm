@@ -39,7 +39,7 @@ public class Personaje {
     }
 
     @ManyToOne
-    @JoinColumn(name = "equipo_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "equipo_id", referencedColumnName = "id", nullable = true)
     public Equipo getEquipo() {
         return equipo;
     }

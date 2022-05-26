@@ -20,6 +20,8 @@ import mggcode.conexion.HibernateController;
 import mggcode.config.Configuracion;
 import mggcode.controller.*;
 import mggcode.entity.*;
+import mggcode.repository.PersonajeRepository;
+import mggcode.repository.PresentadorRepository;
 import mggcode.utiles.comparators.CompararDeclaracionPorId;
 import mggcode.utiles.comparators.CompararFaldonPorId;
 import mggcode.utiles.comparators.CompararPersonajePorId;
@@ -27,10 +29,8 @@ import mggcode.utiles.comparators.CompararPresentadorPorId;
 
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+import java.util.*;
 
 import static java.lang.System.exit;
 
@@ -52,6 +52,12 @@ public class Controller implements Initializable {
     private ObservableList<Faldon> datosFaldon;
     private ObservableList<Equipo> datosEquipo;
     private ObservableList<Localizacion> datosLocalizacion;
+
+    private List<Presentador> presentadoresBD;
+    private List<Personaje> personajesBD;
+    private List<Declaracion> declaracionesBD;
+    private List<Faldon> faldonesBD;
+    private List<Equipo> equiposBD;
 
     private Presentador presentadorActual = new Presentador();
     private Personaje personajeActual = new Personaje();
@@ -213,9 +219,22 @@ public class Controller implements Initializable {
         );
 
         datosPresentador.sort(new CompararPresentadorPorId());
+        datosPresentador.forEach(presentador -> {
+            presentador.setPosition(datosPresentador.indexOf(presentador) + 1);
+        });
         datosPersonaje.sort(new CompararPersonajePorId());
+        datosPersonaje.forEach(per -> {
+            per.setPosition(datosPersonaje.indexOf(per) + 1);
+        });
         datosDeclaraciones.sort(new CompararDeclaracionPorId());
+        datosDeclaraciones.forEach(dec -> {
+            dec.setPosition(datosDeclaraciones.indexOf(dec) + 1);
+        });
+
         datosFaldon.sort(new CompararFaldonPorId());
+        datosFaldon.forEach(fal -> {
+            fal.setPosition(datosFaldon.indexOf(fal) + 1);
+        });
 
         Localizacion l1 = new Localizacion();
         l1.setTexto("Directo");
@@ -238,61 +257,48 @@ public class Controller implements Initializable {
     private List<Presentador> cargarPresentadores() {
 
         var x = presentadorController.getAllPresentadores();
-        if (x == null) {
-            return new ArrayList<>();
-        } else {
-            return x;
-        }
+        presentadoresBD = x;
+        return Objects.requireNonNullElseGet(x, ArrayList::new);
     }
 
     private List<Personaje> cargarPersonajes() {
         var x = personajeController.getAllPersonajes();
-        if (x == null) {
-            return new ArrayList<>();
-        } else {
-            return x;
-        }
+        personajesBD = x;
+        return Objects.requireNonNullElseGet(x, ArrayList::new);
     }
 
     private List<Declaracion> cargarDeclaraciones() {
         var x = declaracionController.getAllDeclaraciones();
-        if (x == null) {
-            return new ArrayList<>();
-        } else {
-            return x;
-        }
+        declaracionesBD = x;
+        return Objects.requireNonNullElseGet(x, ArrayList::new);
     }
 
     private List<Faldon> cargarFaldones() {
         var x = faldonController.getAllFaldones();
-        if (x == null) {
-            return new ArrayList<>();
-        } else {
-            return x;
-        }
+        faldonesBD = x;
+        return Objects.requireNonNullElseGet(x, ArrayList::new);
     }
 
     private List<Equipo> cargarEquipos() {
-        String ruta = Configuracion.config.getProperty("rutaLogos");
-        Equipo f = new Equipo();
-        f.setNombre("-");
-        equipoController.postEquipo(f);
-        Equipo rm = new Equipo();
-        rm.setNombre("Real Madrid");
-        rm.setLogo(ruta + "RealMadrid.png");
-        System.out.println(rm.getLogo());
-        equipoController.postEquipo(rm);
+       // String ruta = Configuracion.config.getProperty("rutaLogos");
+//
+       // Equipo f = new Equipo();
+       // f.setNombre("-");
+//
+       // equipoController.postEquipo(f);
+       // Equipo rm = new Equipo();
+       // rm.setNombre("Real Madrid");
+       // rm.setLogo(ruta + "RealMadrid.png");
+       // equipoController.postEquipo(rm);
+//
+       // Equipo lp = new Equipo();
+       // lp.setNombre("Liverpool");
+       // lp.setLogo(ruta + "Liverpool.png");
+       // equipoController.postEquipo(lp);
 
-        Equipo lp = new Equipo();
-        lp.setNombre("Liverpool");
-        lp.setLogo(ruta + "Liverpool.png");
-        equipoController.postEquipo(lp);
         var x = equipoController.getAllEquipos();
-        if (x == null) {
-            return new ArrayList<>();
-        } else {
-            return x;
-        }
+        equiposBD = x;
+        return Objects.requireNonNullElseGet(x, ArrayList::new);
     }
 
 
@@ -317,7 +323,10 @@ public class Controller implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 if (!t1) {
-                    tblPresentador.getSelectionModel().clearSelection();
+                    if (fieldPresentador.isFocused() || fieldCargo.isFocused()) {
+                    } else {
+                        tblPresentador.getSelectionModel().clearSelection();
+                    }
                 }
 
             }
@@ -346,7 +355,10 @@ public class Controller implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 if (!t1) {
-                    tblPersonaje.getSelectionModel().clearSelection();
+                    if (fieldPersonaje.isFocused() || fieldCargoPersonaje.isFocused() || chboxEquipo.isFocused()) {
+                    } else {
+                        tblPersonaje.getSelectionModel().clearSelection();
+                    }
                 }
 
             }
@@ -371,7 +383,10 @@ public class Controller implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 if (!t1) {
-                    tblDeclaracion.getSelectionModel().clearSelection();
+                    if (fieldDeclaracion.isFocused()) {
+                    } else {
+                        tblDeclaracion.getSelectionModel().clearSelection();
+                    }
                 }
             }
         });
@@ -397,7 +412,10 @@ public class Controller implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 if (!t1) {
-                    tblFaldon.getSelectionModel().clearSelection();
+                    if (fieldFaldon.isFocused() || fieldTitular.isFocused()) {
+                    } else {
+                        tblFaldon.getSelectionModel().clearSelection();
+                    }
                 }
 
             }
@@ -423,7 +441,10 @@ public class Controller implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
                 if (!t1) {
-                    tblLocalizacion.getSelectionModel().clearSelection();
+                    if (fieldLocalizacion.isFocused() || fieldTituloLocalizacion.isFocused()) {
+                    } else {
+                        tblLocalizacion.getSelectionModel().clearSelection();
+                    }
                 }
             }
         });
@@ -772,6 +793,8 @@ public class Controller implements Initializable {
             }
             if (chboxEquipo.getValue() != null) {
                 personaje.setEquipo(chboxEquipo.getSelectionModel().getSelectedItem());
+            } else {
+                personaje.setEquipo(null);
             }
 
             List<Personaje> seleccion = getRotulosSeleccionadosPersonaje();
@@ -1327,47 +1350,163 @@ public class Controller implements Initializable {
         }
     }
 
+    @FXML
+    void menuGuardarAction(ActionEvent event) {
+        vaciarBD();
+        guardar();
+    }
+
     /////////////////////////////////////////////////////////////////////////
     private void vaciarBD() {
-        presentadorController.getAllPresentadores().forEach(presentador -> {
-            presentadorController.deletePresentador(presentador);
-        });
-        personajeController.getAllPersonajes().forEach(personaje -> {
-            personajeController.deletePersonaje(personaje);
-        });
-        declaracionController.getAllDeclaraciones().forEach(dec -> {
-            declaracionController.deleteDeclaracion(dec);
-        });
-        faldonController.getAllFaldones().forEach(faldon -> {
-            faldonController.deleteFaldon(faldon);
+        var preDel = new ArrayList<Presentador>();
+        var preUpdate = new ArrayList<Presentador>();
+        var personajeDel = new ArrayList<Personaje>();
+        var personajeUpdate = new ArrayList<Personaje>();
+        var decDel = new ArrayList<Declaracion>();
+        var decUpdate = new ArrayList<Declaracion>();
+        var falDel = new ArrayList<Faldon>();
+        var falUpdate = new ArrayList<Faldon>();
+        var eqDel = new ArrayList<Equipo>();
+
+        presentadoresBD.forEach(x -> {
+            if (!datosPresentador.contains(x)) {
+                preDel.add(x);
+            } else {
+                if (datosPresentador.get(presentadoresBD.indexOf(x)).getPosition() != x.getPosition()) {
+                    preUpdate.add(x);
+                }
+            }
         });
 
-        equipoController.getAllEquipos().forEach(equipo -> {
-            equipoController.deleteEquipo(equipo);
+        preDel.forEach(x -> {
+            presentadorController.deletePresentador(x);
         });
+
+        preUpdate.forEach(presentador -> {
+            presentadorController.updatePresentador(presentador);
+        });
+
+        personajesBD.forEach(x -> {
+            if (!datosPersonaje.contains(x)) {
+                personajeDel.add(x);
+            } else {
+                if (datosPersonaje.get(personajesBD.indexOf(x)).getPosition() != x.getPosition()) {
+                    personajeUpdate.add(x);
+                }
+            }
+        });
+
+        personajeDel.forEach(x -> {
+            personajeController.deletePersonaje(x);
+        });
+
+        personajeUpdate.forEach(personaje -> {
+            personajeController.updatePersonaje(personaje);
+        });
+
+        declaracionesBD.forEach(x -> {
+            if (!datosDeclaraciones.contains(x)) {
+                decDel.add(x);
+            } else {
+                if (datosDeclaraciones.get(declaracionesBD.indexOf(x)).getPosition() != x.getPosition()) {
+                    decUpdate.add(x);
+                }
+            }
+        });
+
+        decDel.forEach(x -> {
+            declaracionController.deleteDeclaracion(x);
+        });
+
+        decUpdate.forEach(dec -> {
+            declaracionController.updateDeclaracion(dec);
+        });
+
+        faldonesBD.forEach(x -> {
+            if (!datosFaldon.contains(x)) {
+                falDel.add(x);
+            } else {
+                if (datosFaldon.get(faldonesBD.indexOf(x)).getPosition() != x.getPosition()) {
+                    falUpdate.add(x);
+                }
+            }
+        });
+
+        falDel.forEach(x -> {
+            faldonController.deleteFaldon(x);
+        });
+
+        falUpdate.forEach(fal -> {
+            faldonController.updateFaldon(fal);
+        });
+
+        equiposBD.forEach(x -> {
+            if (!datosEquipo.contains(x)) {
+                eqDel.add(x);
+            }
+        });
+        eqDel.forEach(x -> {
+            equipoController.deleteEquipo(x);
+        });
+
     }
 
     private void guardar() {
-        if (datosPresentador.size() != 0) {
-            datosPresentador.forEach(presentador -> {
-                presentadorController.postPresentador(presentador);
-            });
-        }
-        if (datosPersonaje.size() != 0) {
-            datosPersonaje.forEach(personaje -> {
-                personajeController.postPersonaje(personaje);
-            });
-        }
-        if (datosDeclaraciones.size() != 0) {
-            datosDeclaraciones.forEach(dec -> {
-                declaracionController.postDeclaracion(dec);
-            });
-        }
-        if (datosFaldon.size() != 0) {
-            datosFaldon.forEach(faldon -> {
-                faldonController.postFaldon(faldon);
-            });
-        }
+        var preAdd = new ArrayList<Presentador>();
+        var perAdd = new ArrayList<Personaje>();
+        var decAdd = new ArrayList<Declaracion>();
+        var falAdd = new ArrayList<Faldon>();
+        var eqAdd = new ArrayList<Equipo>();
+
+        datosPresentador.forEach(x -> {
+            if (!presentadoresBD.contains(x)) {
+                preAdd.add(x);
+            }
+        });
+
+        preAdd.forEach(presentador -> {
+            presentadorController.postPresentador(presentador);
+        });
+
+        datosPersonaje.forEach(x -> {
+            if (!personajesBD.contains(x)) {
+                perAdd.add(x);
+            }
+        });
+
+        perAdd.forEach(personaje -> {
+            personajeController.postPersonaje(personaje);
+        });
+
+        datosDeclaraciones.forEach(x -> {
+            if (!declaracionesBD.contains(x)) {
+                decAdd.add(x);
+            }
+        });
+
+        decAdd.forEach(dec -> {
+            declaracionController.postDeclaracion(dec);
+        });
+
+        datosFaldon.forEach(x -> {
+            if (!faldonesBD.contains(x)) {
+                falAdd.add(x);
+            }
+        });
+
+        falAdd.forEach(fal -> {
+            faldonController.postFaldon(fal);
+        });
+
+        datosEquipo.forEach(x -> {
+            if (!equiposBD.contains(x)) {
+                eqAdd.add(x);
+            }
+        });
+
+        eqAdd.forEach(eq -> {
+            equipoController.postEquipo(eq);
+        });
 
     }
 
